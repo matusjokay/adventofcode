@@ -1,5 +1,6 @@
 
-def slope(row, col):
+def slope(coord):
+    row, col = coord
     act_col = 0
     res = 0
     wait_row = row
@@ -19,13 +20,7 @@ def slope(row, col):
     return res
 
 # part 1
-print(slope(1,3))
+print(slope((1,3),))
 
 # part 2
-mul = 1
-for s in [(1,1), (1,3),(1,5), (1,7), (2,1)]:
-    m = slope(*s)
-    mul *= m
-print(mul)
-
-    
+print(reduce(lambda x,y: x*y, map(slope, [(1,1), (1,3), (1,5), (1,7), (2,1)])))
