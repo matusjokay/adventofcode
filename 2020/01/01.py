@@ -1,10 +1,3 @@
 nums = [int(line) for line in open('input.txt')]
-s = 0
-for i in range(0,len(nums)):
-    for j in range(i+1, len(nums)):
-        if nums[i] + nums[j] == 2020:
-            print(f'{nums[i]*nums[j]}')
-        for k in range(j+i, len(nums)):
-            if nums[i]+nums[j]+nums[k] == 2020:
-                print(f'{nums[i]*nums[j]*nums[k]}')
-    
+print(next(i*j for i in nums for j in nums if i+j == 2020))
+print(next(i*j*k for i in nums for j in nums for k in nums if i+j+k == 2020))
