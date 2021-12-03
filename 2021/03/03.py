@@ -18,18 +18,15 @@ def part1(lines):
 
 
 def reduc(lines, majority = True):
+    symbol_order = [chr(majority + ord('0')), chr(majority ^ 1 + ord('0'))]
+
     ind = 0
     while len(lines) > 1:
         ones = [sum([1 for l in lines if l[i] == '1']) for i in range(len(lines[0]))]
-        zeros = [len(lines) - i for i in ones]
 
-        c = '1'
-        if majority:
-            if ones[ind] < len(lines)/2:
-                c = '0'
-        else:
-            if ones[ind] >= len(lines)/2:
-                c = '0'
+        c = symbol_order[0]
+        if ones[ind] < len(lines)/2:
+            c = symbol_order[1]
 
         lines = [l for l in lines if l[ind] == c]
         ind += 1
