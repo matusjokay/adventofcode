@@ -22,21 +22,16 @@ def reduc(lines, majority = True):
 
     ind = 0
     while len(lines) > 1:
-        ones = [sum([1 for l in lines if l[i] == '1']) for i in range(len(lines[0]))]
-
-        c = symbol_order[0]
-        if ones[ind] < len(lines)/2:
-            c = symbol_order[1]
-
-        lines = [l for l in lines if l[ind] == c]
+        sym = symbol_order[0] if sum([1 for l in lines if l[ind] == '1']) < len(lines)/2 else symbol_order[1]
+        lines = [l for l in lines if l[ind] == sym]
         ind += 1
 
-    return lines
+    return lines[0]
 
 
 def part2(lines):
-    oxy = reduc(lines, majority = True)[0]
-    co2 = reduc(lines, majority = False)[0]
+    oxy = reduc(lines, majority = True)
+    co2 = reduc(lines, majority = False)
     return int(oxy, 2) * int(co2, 2)
 
 
