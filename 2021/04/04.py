@@ -5,20 +5,10 @@ FILE = 'input.txt'
 with open(FILE) as f:
     lines = f.read().splitlines()
     nums = [*map(int,lines[0].split(','))]
-    lines = lines[1:]
 
-    bingo = list()
-    tmp = list()
-    for l in lines:
-        l = l.split()
-        if not l:
-            if tmp:
-                bingo.append(tmp)
-            tmp = list()
-            continue
-        tmp.append([*map(int, l)])
-    if tmp:
-        bingo.append(tmp)
+    bingo = []
+    for ind in range(2, len(lines)-2, 6):
+        bingo.append([list(map(int, l.split())) for l in lines[ind:ind+5]])
 
 
 def play(lines, test_fnc):
@@ -41,12 +31,10 @@ def play(lines, test_fnc):
                         winners[ind] = 1
                         break
 
-            # check win condition
+            # check win condition and return sum of unused elms of winner table
+            # multiplied by winner num
             if test_fnc(winners):
-                s = 0
-                for row in b:
-                    s += sum([elm if elm > 0 else 0 for elm in row])
-                return n * s
+                return n * sum([sum([elm if elm > 0 else 0 for elm in row]) for row in b])
 
 
 print(play(lines, any))
