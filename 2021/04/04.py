@@ -22,18 +22,13 @@ def play(lines, test_fnc):
                     row[elm_index] = -1
 
                     # check actual row and col for win
-                    if (
-                        sum([elm if elm < 0 else 0 for elm in row]) == -len(row)
-                        or
-                        sum([elm if elm < 0 else 0 for elm in list(zip(*b))[elm_index]]) == -len(row)
-                       ):
+                    if sum(row) == -len(row) or sum(list(zip(*b))[elm_index]) == -len(row):
                         winners[ind] = 1
-                        break
 
-            # check win condition and return sum of unused elms of winner table
-            # multiplied by winner num
-            if test_fnc(winners):
-                return n * sum([sum([elm if elm > 0 else 0 for elm in row]) for row in b])
+                    # check win condition and return sum of unused elms of winner table
+                    # multiplied by winner num
+                    if test_fnc(winners):
+                        return n * sum([sum([elm if elm > 0 else 0 for elm in row]) for row in b])
 
 
 print(play(lines, any))
