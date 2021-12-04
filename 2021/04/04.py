@@ -17,17 +17,16 @@ def play(lines, test_fnc):
         for ind, b in enumerate(bingo):
             for row in b:
                 if n in row:
-                    # mark num with sign, but zero is special one...
+                    # mark num: change value num to -1
                     elm_index = row.index(n)
-                    row[elm_index] = -n if n else -0xffffffff
+                    row[elm_index] = -1
 
-                    # check actual row for win
-                    if sum([1 if elm < 0 else 0 for elm in row]) == len(row):
-                        winners[ind] = 1
-                        break
-
-                    # check actual col for win
-                    if sum([1 if elm < 0 else 0 for elm in list(zip(*b))[elm_index]]) == len(row):
+                    # check actual row and col for win
+                    if (
+                        sum([elm if elm < 0 else 0 for elm in row]) == -len(row)
+                        or
+                        sum([elm if elm < 0 else 0 for elm in list(zip(*b))[elm_index]]) == -len(row)
+                       ):
                         winners[ind] = 1
                         break
 
