@@ -38,3 +38,6 @@ def do(nums, days):
 
 print(do(nums, days=80))
 print(do(nums, days=256))
+
+#188 min, 3_783_453-digit result
+#print(do(nums, days=100_000_000))
