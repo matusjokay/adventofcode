@@ -2,8 +2,7 @@
 
 
 def do(nums, fuel_cost):
-    fuels = [sum([fuel_cost(n, pos) for n in nums]) for pos in range(max(nums))]
-    print(fuels[fuels.index(min(fuels))])
+    print([sum([fuel_cost(n, pos) for n in nums]) for pos in range(max(nums))])
 
 
 nums = [*map(int, open('input.txt').readline().split(','))]
