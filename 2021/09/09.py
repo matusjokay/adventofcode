@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-from more_itertools import stagger, collapse, padded, chunked
+from more_itertools import stagger, collapse, padded
 from collections import defaultdict
 from functools import reduce
 from math import copysign
@@ -13,19 +13,14 @@ def mark_area(ind, d, ll):
 
     d[ind] *= -1.0
     area = set([ind,])
-    area.update(mark_area(ind+1, d, ll))
-    area.update(mark_area(ind+ll, d,ll))
-    if ind - 1 >= 0:
-        area.update(mark_area(ind-1, d, ll))
-        area.update(mark_area(ind-ll, d, ll))
-
+    area.update(*[mark_area(i, d, ll) for i in [ind+1, ind+ll, ind-1, ind-ll]])
     return area
 
 
 def day9(nums, line_len):
     # part A
     num = [*stagger(nums, offsets=[-line_len,-1,0,1,line_len], longest=True, fillvalue=9)]
-    low = list(((ind, e[2]+1) for ind, e in enumerate(num) if e[0]+e[1]+e[3]+e[4] > 4*e[2]))
+    low = list(((ind, e[2]+1) for ind, e in enumerate(num) if e[0]>e[2] and e[1]>e[2] and e[3]>e[2] and e[4]>e[2]))
     print(sum([*zip(*low)][1]))
 
     # part B
