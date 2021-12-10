@@ -18,13 +18,10 @@ def validate(line):
             return weights[c], 0
 
     # part B
-    return 0, reduce(lambda x,y: x*5 + weights[y], [0]+stack)
+    return 0, reduce(lambda x,y: x*5 + weights[y], stack, 0)
 
 
-FILE = 'input.txt'
-with open(FILE) as f:
-    lines = f.read().splitlines()
-
+lines = open('input.txt').read().splitlines()
 partA, partB = zip(*map(validate, lines))
 partB = sorted(partB, reverse=True)
 # 1/2 elms in partB are 0 (for partA), so median is Q25 of reversed partB
