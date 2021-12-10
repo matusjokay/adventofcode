@@ -5,8 +5,7 @@ from functools import reduce
 
 
 def validate(line):
-    dic  = {'<': ('>', 4), '{': ('}', 3), '(': (')', 1), '[': (']', 2),
-            '>': 25137, '}': 1197, ')': 3, ']': 57}
+    weights = {'<': 4, '{': 3, '(': 1, '[': 2, '>': 25137, '}': 1197, ')': 3, ']': 57}
 
     stack = []
     for c in line:
@@ -15,11 +14,11 @@ def validate(line):
             continue
 
         # part A
-        if c != dic[stack.pop(0)][0]:
-            return dic[c], 0
+        if ord(c) - ord(stack.pop(0)) not in (1,2):
+            return weights[c], 0
 
     # part B
-    return 0, reduce(lambda x,y: x*5 + dic[y][1], [0]+stack)
+    return 0, reduce(lambda x,y: x*5 + weights[y], [0]+stack)
 
 
 FILE = 'input.txt'
