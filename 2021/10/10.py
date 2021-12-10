@@ -1,39 +1,32 @@
 #!/usr/bin/env python3
 
 
+from functools import reduce
+
+
 def validate(line):
     dic  = {'<': ('>', 4), '{': ('}', 3), '(': (')', 1), '[': (']', 2),
             '>': 25137, '}': 1197, ')': 3, ']': 57}
 
-    partA = 0
     stack = []
     for c in line:
         if c in ('<', '{', '(', '['):
             stack.insert(0, c)
-        else:
-            cc = stack.pop(0)
-            if c != dic[cc][0]:
-                partA = dic[c]
-                stack = None
-                break
+            continue
 
-    partB = 0
-    while stack:
-        c = stack.pop(0)
-        partB = 5 * partB + dic[c][1]
+        # part A
+        if c != dic[stack.pop(0)][0]:
+            return dic[c], 0
 
-    return partA, partB
-
-
-def day10(lines):
-    partA, partB = zip(*map(validate, lines))
-    partB = sorted(partB)
-    partB = partB[len(partB) - partB[::-1].index(0):] # remove zeros
-    print(sum(partA), partB[len(partB)//2])
+    # part B
+    return 0, reduce(lambda x,y: x*5 + dic[y][1], [0]+stack)
 
 
 FILE = 'input.txt'
 with open(FILE) as f:
     lines = f.read().splitlines()
 
-day10(lines)
+partA, partB = zip(*map(validate, lines))
+partB = sorted(partB, reverse=True)
+# 1/2 elms in partB are 0 (for partA), so median is Q25 of reversed partB
+print(sum(partA), partB[len(partB)//4])
