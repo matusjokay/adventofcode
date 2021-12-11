@@ -10,7 +10,6 @@ def flash(ind, mapa):
     for n in [*neigh(*ind, mapa)]:
         mapa[n] += 1
     mapa[ind] = 0
-    return set(filter(lambda n: mapa[n] > 9, neigh(*ind, mapa)))
 
 
 def do_day11(mapa):
@@ -19,13 +18,11 @@ def do_day11(mapa):
         # increase by 1
         mapa = {k:v+1 for k,v in mapa.items()}
 
-        # get all start points with value == 10
-        points_10 = set(filter(lambda n: mapa[n] > 9, mapa))
-        cnt += len(points_10)
-        while points_10:
-            new_points_10 = flash(points_10.pop(), mapa)
-            cnt += len(new_points_10-points_10)
-            points_10.update(new_points_10)
+        cnt_new = True
+        while cnt_new:
+            # while there is/are point(s) with val > 9, flash
+            cnt_new = len([flash(p, mapa) for p in filter(lambda n: mapa[n] > 9, mapa)])
+            cnt += cnt_new
 
         i += 1
         if i == 100:
