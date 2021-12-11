@@ -14,22 +14,22 @@ def flash(ind, mapa):
 
 
 def do_day11(mapa):
-    i = flcnt = 0
+    i = cnt = 0
     while True:
         # increase by 1
         mapa = {k:v+1 for k,v in mapa.items()}
 
         # get all start points with value == 10
-        fl = set(filter(lambda n: mapa[n] > 9, mapa))
-        flcnt += len(fl)
-        while fl:
-            flfl = flash(fl.pop(), mapa)
-            flcnt += len(flfl-fl)
-            fl.update(flfl)
+        points_10 = set(filter(lambda n: mapa[n] > 9, mapa))
+        cnt += len(points_10)
+        while points_10:
+            new_points_10 = flash(points_10.pop(), mapa)
+            cnt += len(new_points_10-points_10)
+            points_10.update(new_points_10)
 
         i += 1
         if i == 100:
-            print("Part A:", flcnt)
+            print("Part A:", cnt)
         if not any(mapa.values()):
             break
     print("Part B:", i)
