@@ -14,7 +14,7 @@ def flash(ind, mapa):
 
 def do_day11(mapa):
     i = cnt = 0
-    while True:
+    while any(mapa.values()):
         # increase by 1
         mapa = {k:v+1 for k,v in mapa.items()}
 
@@ -27,8 +27,6 @@ def do_day11(mapa):
         i += 1
         if i == 100:
             print("Part A:", cnt)
-        if not any(mapa.values()):
-            break
     print("Part B:", i)
 
 
