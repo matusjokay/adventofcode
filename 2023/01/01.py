@@ -15,11 +15,9 @@ m = {
     '1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9',
     'one':'1','two':'2','three':'3','four':'4','five':'5','six':'6','seven':'7','eight':'8','nine':'9',
     }
-mr = {
-    '1':'1','2':'2','3':'3','4':'4','5':'5','6':'6','7':'7','8':'8','9':'9',
-    'eno':'1','owt':'2','eerht':'3','ruof':'4','evif':'5','xis':'6','neves':'7','thgie':'8','enin':'9',
-    }
+mr = {k[::-1]: v for k, v in m.items()}
 
-f1 = [re.findall(r"(?:\d|one|two|three|four|five|six|seven|eight|nine)", line)[0] for line in open(fname)]
-f2 = [re.findall(r"(?:\d|eno|owt|eerht|ruof|evif|xis|neves|thgie|enin)", line[::-1])[0] for line in open(fname)]
+r = r"one|two|three|four|five|six|seven|eight|nine"
+f1 = [re.findall(r"(?:\d|"+r+r")", line)[0] for line in open(fname)]
+f2 = [re.findall(r"(?:\d|"+r[::-1]+r")", line[::-1])[0] for line in open(fname)]
 print(reduce(lambda a, b: a + b, [int(m[e[0]] + mr[e[1]]) for e in zip(f1, f2)]))
